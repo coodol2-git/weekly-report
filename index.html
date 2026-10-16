@@ -51,7 +51,7 @@
 <dialog id="helpdlg" aria-labelledby="helptitle"><div class="help-heading"><h2 id="helptitle">사용방법</h2><button id="closehelp" class="close-help" aria-label="사용방법 닫기" type="button">X</button></div>
 <section><h3>개인 보고서 작성</h3><ol><li>관리자가 전달한 본인 전용 링크로 접속합니다. Google Drive 앱 설치나 API 주소 입력은 필요 없습니다.</li><li>화면 하단의 본인 이름 작성 예시 버튼을 누르면 담당 업무에 맞는 가상 예시로 채웁니다. 현재 입력이 교체되므로 필요한 내용은 먼저 보내기로 저장하세요. 예시는 자동 제출되지 않습니다. 관리자는 작성자를 선택한 뒤 해당 인원 작성 예시 버튼으로 조회용 팝업을 열 수 있습니다.</li><li>주차를 선택하고 업무개요, 상세 기록, 차주계획을 작성합니다. 추가 기록은 하단 버튼으로 늘립니다.</li><li>임시저장은 현재 브라우저에만 보관합니다. 보내기를 누르면 관리자 Google Drive의 본인 폴더에 CSV로 저장됩니다.</li><li>저장본 새로고침은 해당 주차의 Drive 저장본을 다시 읽습니다. 불러오기는 기존 CSV·HTML·JSON 파일을 가져옵니다.</li><li>다른 저장본과 충돌하면 덮어쓰기 확인을 거칩니다. 이전 CSV는 이력 폴더에 보관합니다.</li></ol></section>
 <section><h3>관리자</h3><p>관리자 전용 링크에서는 전체 직원 보고서를 조회하고 기존 자료를 가져오며 종합보고를 Drive에 저장할 수 있습니다. 작성자 순서는 김신애 / 김윤미 / 이유빈 / 홍세민 / 장미 / 김민주입니다.</p></section>
-<section><h3>PC에서 간편하게 접속하기</h3><ol><li>본인 전용 링크로 한 번 접속한 뒤 상단의 PC 바로가기 만들기를 누릅니다.</li><li>다운로드 폴더에 생긴 분석지원_주간보고_본인이름.url 파일을 Windows 바탕화면으로 옮깁니다. 이후 이 파일을 더블클릭하면 본인 보고서로 접속합니다.</li><li>브라우저 북마크로도 사용할 수 있습니다. 본인 링크로 접속한 상태에서 Ctrl+D를 누르고 저장하세요. 다음부터 북마크를 클릭하면 됩니다.</li></ol><p>바로가기에는 개인 접속정보가 포함됩니다. 본인 PC에서만 사용하고 다른 사람에게 전달하지 마세요. 관리자가 접속 링크를 재발급하면 새 링크로 바로가기도 다시 만드세요.</p></section>
+<section><h3>PC에서 간편하게 접속하기</h3><ol><li>본인 전용 링크로 한 번 접속한 뒤 상단의 PC 바로가기 만들기를 누릅니다.</li><li>다운로드 폴더의 분석지원_주간보고_본인이름_바로가기.zip을 우클릭 → 모두 압축 풀기를 선택합니다. 안에 있는 .url 바로가기를 Windows 바탕화면으로 옮긴 뒤 더블클릭하세요. 브라우저에서 확장자가 .download로 바뀌는 문제를 피하도록 ZIP으로 제공합니다.</li><li>브라우저 북마크로도 사용할 수 있습니다. 본인 링크로 접속한 상태에서 Ctrl+D를 누르고 저장하세요. 다음부터 북마크를 클릭하면 됩니다.</li></ol><p>바로가기에는 개인 접속정보가 포함됩니다. 본인 PC에서만 사용하고 다른 사람에게 전달하지 마세요. 관리자가 접속 링크를 재발급하면 새 링크로 바로가기도 다시 만드세요.</p></section>
 <section><h3>개인 링크와 접속 종료</h3><p>개인 링크를 가진 사람은 해당 직원 자료에 접근할 수 있습니다. 링크를 다른 사람에게 전달하지 마세요. 계정 비밀번호 인증 방식은 아닙니다. 공용 PC에서는 접속 종료를 누르고 탭을 닫으세요. 접속 종료 시 본인의 브라우저 임시저장본도 삭제합니다. 관리자가 링크를 다시 발급하면 이전 링크는 모두 해제됩니다.</p><p>전송 오류가 나면 임시저장 후 연결을 확인하세요. 성공 메시지는 Drive 저장 응답을 받은 뒤에만 표시합니다.</p></section>
 </dialog>
 <dialog id="confirmdlg"><h2 id="confirmtitle">확인</h2><p id="confirmtext"></p><div class="dialog-actions"><button id="cancelconfirm">취소</button><button id="acceptconfirm" class="primary">진행</button></div></dialog>
@@ -128,7 +128,16 @@ function personalShortcut(){
  const name=session.role==='admin'?'관리자':session.person;
  return {name:'분석지원_주간보고_'+name+'.url',text:'[InternetShortcut]\r\nURL='+u.href+'\r\n'};
 }
-$('makeshortcut').onclick=()=>run(async()=>{const f=personalShortcut();download(f.name,f.text,'application/internet-shortcut');message('PC 바로가기 파일을 내려받았습니다. 다운로드 폴더에서 .url 파일을 바탕화면으로 옮긴 뒤 더블클릭하세요. 본인 접속정보가 포함되므로 다른 사람에게 전달하지 마세요.');});
+function shortcutZip(f){
+ const name=new TextEncoder().encode(f.name),data=new TextEncoder().encode(f.text);let crc=0xffffffff;
+ for(const byte of data){crc^=byte;for(let j=0;j<8;j++)crc=(crc>>>1)^((crc&1)?0xedb88320:0);}crc=(crc^0xffffffff)>>>0;
+ const central=30+name.length+data.length,end=central+46+name.length,out=new Uint8Array(end+22),v=new DataView(out.buffer);
+ const u16=(p,x)=>v.setUint16(p,x,true),u32=(p,x)=>v.setUint32(p,x,true);
+ u32(0,0x04034b50);u16(4,20);u16(6,0x0800);u16(12,33);u32(14,crc);u32(18,data.length);u32(22,data.length);u16(26,name.length);out.set(name,30);out.set(data,30+name.length);
+ u32(central,0x02014b50);u16(central+4,20);u16(central+6,20);u16(central+8,0x0800);u16(central+14,33);u32(central+16,crc);u32(central+20,data.length);u32(central+24,data.length);u16(central+28,name.length);out.set(name,central+46);
+ u32(end,0x06054b50);u16(end+8,1);u16(end+10,1);u32(end+12,46+name.length);u32(end+16,central);return out;
+}
+$('makeshortcut').onclick=()=>run(async()=>{const f=personalShortcut();download(f.name.replace(/\.url$/, '_바로가기.zip'),shortcutZip(f),'application/zip');message('바로가기 ZIP을 내려받았습니다. ZIP을 우클릭해 모두 압축 풀기 → 안의 바로가기를 바탕화면으로 이동 → 더블클릭하세요. 개인 접속정보가 포함되므로 본인 PC에서만 사용하세요.');});
 
 $('closehelp').onclick=()=>$('helpdlg').close();
 $('helpdlg').addEventListener('click',e=>{if(e.target===$('helpdlg')){const r=$('helpdlg').getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)$('helpdlg').close();}});
